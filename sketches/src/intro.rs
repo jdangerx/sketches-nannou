@@ -9,12 +9,18 @@ fn main() {
 }
 
 struct Model {
-    my_box: Rect
+    my_box: Rect,
+    texture: wgpu::Texture
 }
 
-fn model(_app: &App) -> Model {
+fn model(app: &App) -> Model {
+    let assets = app.assets_path().unwrap();
+    let img_path = assets.join("crumpled-paper-25.png");
+    let texture = wgpu::Texture::from_path(app, img_path).unwrap();
+
     Model {
-        my_box: Rect::from_w_h(100.0, 100.0)
+        my_box: Rect::from_w_h(100.0, 100.0),
+        texture: texture
     }
 }
 
@@ -38,8 +44,13 @@ fn update(app: &App, model: &mut Model, _update: Update) {
 }
 
 fn view(app: &App, model: &Model, frame: Frame) {
+    let win = app.window_rect();
     let draw = app.draw();
     frame.clear(WHEAT);
+
+    draw.texture(&model.texture)
+        .xy(win.xy())
+        .wh(win.wh());
 
     draw.rect()
         .xy(model.my_box.xy())
