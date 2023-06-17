@@ -1,0 +1,10 @@
+[package]
+name = "sketches"
+version = "0.1.0"
+
+[dependencies]
+nannou = "0.18.1"
+
+[[example]]
+name = "intro"
+path = "src/intro.rs"

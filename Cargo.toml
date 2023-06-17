@@ -1,0 +1,7 @@
+[workspace]
+
+members = [
+  "sketches",
+]
+
+resolver = "2"
